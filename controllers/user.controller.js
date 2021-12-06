@@ -29,24 +29,16 @@ const userGet = async (req, res = response) => {
 const userPost = async (req, res = response) => {
   try {
     const {
-      name,
       email,
       password,
       role,
-      customerLocation,
-      address,
-      phone,
-      zipcode,
+      ...leftover
     } = req.body;
     const user = new User({
-      name,
       email,
       password,
       role,
-      customerLocation,
-      address,
-      phone,
-      zipcode,
+      ...leftover,
     });
 
     if (password.length < 6)

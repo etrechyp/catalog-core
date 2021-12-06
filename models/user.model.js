@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const UserSchema = Schema({
-  name: {
+  firstName: {
     type: String,
     required: true,
     validate: {
@@ -11,6 +11,18 @@ const UserSchema = Schema({
       message: `that is not a valid name!`,
     },
   },
+
+  lastName: {
+    type: String,
+    required: true,
+    validate: {
+      validator: (name) => {
+        return name.length > 0 && name.length <= 64;
+      },
+      message: `that is not a valid name!`,
+    },
+  },
+  
   email: {
     type: String,
     unique: true,
@@ -29,41 +41,7 @@ const UserSchema = Schema({
     type: String,
     required: [true, "Password is mandatory"],
   },
-
-  role: {
-    type: String,
-    enum: {
-      values: ["ADMIN_ROLE", "USER_ROLE"],
-      message: "{VALUE} is invalid",
-    },
-    default: "USER_ROLE",
-  },
-  customerLocation: {
-    type: String,
-    enum: {
-      values: ["local", "international"],
-      message: "{VALUE} is invalid",
-    },
-    default: "local",
-  },
-  status: {
-    type: Boolean,
-    default: true,
-  },
-  verified: {
-    type: Boolean,
-    default: false,
-  },
-  address: {
-    type: String,
-    required: [true, "address is mandatory"],
-    validate: {
-      validator: (address) => {
-        return address.length > 0;
-      },
-      message: "address must not be an empty field",
-    },
-  },
+  
   phone: {
     type: String,
     validate: {
@@ -74,6 +52,56 @@ const UserSchema = Schema({
       message: "phone number is not valid",
     },
   },
+
+  addressLine1: {
+    type: String,
+    required: [true, "address is mandatory"],
+    validate: {
+      validator: (address) => {
+        return address.length > 0;
+      },
+      message: "address must not be an empty field",
+    },
+  },
+
+  addressLine2: {
+    type: String,
+  },
+
+  //TODO add validation for country, state, city
+  countryName: { 
+    type: String,
+    required: [true, "country is mandatory"],
+    validate: {
+      validator: (country) => {
+        return country.length > 0;
+      },
+      message: "country must not be an empty field",
+    },
+  },
+
+  regionName: { 
+    type: String,
+    required: [true, "region is mandatory"],
+    validate: {
+      validator: (country) => {
+        return country.length > 0;
+      },
+      message: "region must not be an empty field",
+    },
+  },
+  
+  cityName: { 
+    type: String,
+    required: [true, "city is mandatory"],
+    validate: {
+      validator: (country) => {
+        return country.length > 0;
+      },
+      message: "city must not be an empty field",
+    },
+  },
+  
   zipcode: {
     type: String,
     validate: {
@@ -82,6 +110,63 @@ const UserSchema = Schema({
         return usRegex.test(zipcode);
       },
     },
+  },
+
+  companyName: {
+    type: String,
+  },
+
+  organizationType: {
+    type: String,
+  },
+
+  styleOfBusiness: {
+    type: String,
+    required: [true, "style of business is mandatory"],
+    enum: {
+      values: ["Manufacturer", "Distributor", "Importer", "Wholesaler", "Retailer"],
+      message: "style of business is not valid",
+    },
+  },
+
+  yearEstablished: {
+    type: Number,
+    required: [true, "year established is mandatory"],
+    validate: {
+      validator: (year) => {
+        return year > 1900 && year <= Date().getFullYear();
+      },
+      message: "year established is not valid",
+    },
+  },
+
+  role: {
+    type: String,
+    enum: {
+      values: ["ADMIN_ROLE", "USER_ROLE"],
+      message: "{VALUE} is invalid",
+    },
+    default: "USER_ROLE",
+  },
+
+  //TODO discutir si se debe dejar esto
+  customerLocation: {
+    type: String,
+    enum: {
+      values: ["local", "international"],
+      message: "{VALUE} is invalid",
+    },
+    default: "local",
+  },
+
+  status: {
+    type: Boolean,
+    default: true,
+  },
+
+  verified: {
+    type: Boolean,
+    default: false,
   },
 });
 

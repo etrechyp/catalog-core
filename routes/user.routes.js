@@ -7,13 +7,13 @@ const {
   userPost,
   userDelete,
 } = require("../controllers/user.controller");
-const { validateFields, validateJWT, isAdminRole } = require("../middlewares");
+const { validateJWT, isAdminRole } = require("../middlewares");
 
 const router = Router();
 
 router.get("/", validateJWT, userGet);
 
-router.put("/:id", validateJWT, userPut);
+router.put("/:id", [ validateJWT, isAdminRole ], userPut);
 
 router.post("/", check("email").custom(emailExist), userPost);
 

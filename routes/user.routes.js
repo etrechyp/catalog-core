@@ -17,6 +17,6 @@ router.put("/:id", [ validateJWT, isAdminRole ], userPut);
 
 router.post("/", check("email").custom(emailExist), userPost);
 
-router.delete("/:id", [validateJWT, isAdminRole], userDelete);
+router.delete("/:id", [ validateJWT, isAdminRole ], userDelete);
 
 module.exports = router;

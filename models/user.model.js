@@ -37,6 +37,7 @@ const UserSchema = Schema({
       message: `that is not a valid email!`,
     },
   },
+  
   password: {
     type: String,
     required: [true, "Password is mandatory"],
@@ -44,16 +45,10 @@ const UserSchema = Schema({
   
   phone: {
     type: String,
-    validate: {
-      validator: (phone) => {
-        const usRegex = /^[0-9]{3}-{0,1}[0-9]{3}-{0,1}[0-9]{4}$/;
-        return usRegex.test(phone);
-      },
-      message: "phone number is not valid",
-    },
+    required: true,
   },
 
-  addressLine1: {
+  address: {
     type: String,
     required: [true, "address is mandatory"],
     validate: {
@@ -64,12 +59,8 @@ const UserSchema = Schema({
     },
   },
 
-  addressLine2: {
-    type: String,
-  },
-
   //TODO add validation for country, state, city
-  countryName: { 
+  country: { 
     type: String,
     required: [true, "country is mandatory"],
     validate: {
@@ -80,9 +71,9 @@ const UserSchema = Schema({
     },
   },
 
-  regionName: { 
+  state: { 
     type: String,
-    required: [true, "region is mandatory"],
+    required: [true, "state is mandatory"],
     validate: {
       validator: (country) => {
         return country.length > 0;
@@ -91,7 +82,7 @@ const UserSchema = Schema({
     },
   },
   
-  cityName: { 
+  city: { 
     type: String,
     required: [true, "city is mandatory"],
     validate: {
@@ -120,43 +111,31 @@ const UserSchema = Schema({
     type: String,
   },
 
-  styleOfBusiness: {
+  businessStyle: {
     type: String,
     required: [true, "style of business is mandatory"],
     enum: {
-      values: ["Manufacturer", "Distributor", "Importer", "Wholesaler", "Retailer"],
+      values: ["Wholesaler", "Store"],
       message: "style of business is not valid",
     },
   },
 
-  yearEstablished: {
+  yearStablished: {
     type: Number,
-    required: [true, "year established is mandatory"],
+    required: [true, "year stablished is mandatory"],
     validate: {
       validator: (year) => {
-        return year > 1900 && year <= Date().getFullYear();
+        const usRegex = /^[0-9]{4}$/;
+        return usRegex.test(year);
+        
       },
       message: "year established is not valid",
     },
   },
 
-  role: {
-    type: String,
-    enum: {
-      values: ["ADMIN_ROLE", "USER_ROLE"],
-      message: "{VALUE} is invalid",
-    },
-    default: "USER_ROLE",
-  },
-
-  //TODO discutir si se debe dejar esto
-  customerLocation: {
-    type: String,
-    enum: {
-      values: ["local", "international"],
-      message: "{VALUE} is invalid",
-    },
-    default: "local",
+  isAdmin: {
+    type: Boolean,
+    default: false,
   },
 
   status: {

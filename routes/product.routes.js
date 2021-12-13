@@ -1,14 +1,13 @@
 const { Router } = require("express");
-const { validateJWT } = require("../middlewares");
-const productCtrl = require("../controllers/product.controller");
+const {
+  getCatalog,
+  putCatalog, } = require("../controllers/product.controller");
+
 const router = Router();
 
-router.get("/", productCtrl.getProducts);
+router.get('/catalog', getCatalog)
 
-router.get("/:id", productCtrl.getProduct);
+router.put('/catalog', putCatalog)
 
-router.post("/", validateJWT, productCtrl.createProduct);
-
-router.get("/:Categories", productCtrl.getProductCategories);
 
 module.exports = router;

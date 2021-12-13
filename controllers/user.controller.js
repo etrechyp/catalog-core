@@ -1,15 +1,15 @@
-const { response, request } = require("express");
+const { response } = require("express");
 const bcryptjs = require("bcryptjs");
 const User = require("../models/user.model");
 const { validateObjectId } = require("../helpers/db-validators");
 
 const userGet = async (req, res = response) => {
   try {
-    const { limit = 10, from = 0 } = req.query;
+    const { from = 0 } = req.query;
     const query = { status: true };
     const [total, users] = await Promise.all([
       User.countDocuments(query),
-      User.find(query).skip(Number(from)).limit(Number(limit)),
+      User.find(query).skip(Number(from)),
     ]);
 
     res.json({
@@ -31,13 +31,13 @@ const userPost = async (req, res = response) => {
     const {
       email,
       password,
-      role,
+      isAdmin,
       ...leftover
     } = req.body;
     const user = new User({
       email,
       password,
-      role,
+      isAdmin,
       ...leftover,
     });
 
@@ -65,7 +65,7 @@ const userPut = async (req, res = response) => {
   try {
     const { id } = req.params;
     const { _id, password, ...leftover } = req.body;
-
+    console.log(req.user + ' = controller');
     const idValidationResult = validateObjectId(id, "user");
     if (!idValidationResult.ok) throw new Error(idValidationResult.err).message;
 

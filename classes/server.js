@@ -2,12 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const { dbConnection } = require("../database/config.db");
 
+
+
 const router = express.Router();
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+    
 
     this.paths = {
       users: "/api/users",
@@ -28,6 +31,7 @@ class Server {
     this.app.use(cors({
       credentials: false,
     }));
+    this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
     this.app.use(express.static("public"));
     this.app.use('/', router);

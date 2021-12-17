@@ -16,6 +16,6 @@ router.post(
 
 router.post("/sc_token", validateJWT, scToken);
 
-router.get("/", validateJWT, renewToken);
+router.post("/", renewToken);
 
 module.exports = router;

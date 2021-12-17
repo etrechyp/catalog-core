@@ -16,6 +16,7 @@ class Server {
       users: "/api/users",
       auth: "/api/auth",
       products: "/api/products",
+      report: "/api/report",
     };
 
     this.database();
@@ -41,6 +42,7 @@ class Server {
     this.app.use(this.paths.products, require("../routes/product.routes"));
     this.app.use(this.paths.auth, require("../routes/auth.routes"));
     this.app.use(this.paths.users, require("../routes/user.routes"));
+    this.app.use(this.paths.report, require("../routes/report.routes"));
   }
 
   listen() {

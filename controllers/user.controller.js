@@ -65,7 +65,6 @@ const userPut = async (req, res = response) => {
   try {
     const { id } = req.params;
     const { _id, password, ...leftover } = req.body;
-    console.log(req.user + ' = controller');
     const idValidationResult = validateObjectId(id, "user");
     if (!idValidationResult.ok) throw new Error(idValidationResult.err).message;
 

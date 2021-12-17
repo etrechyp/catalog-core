@@ -4,6 +4,7 @@ const { generateSC } = require("./auth.controller");
 const { writeFile } = require("fs/promises");
 const { dirname, join } = require("path");
 const dayjs = require("dayjs");
+const { fstat, read } = require("fs");
 
 
 const getCatalog = (req, res = response) => {
@@ -92,10 +93,17 @@ const getAndMergeCatalog = async (token, numberOfProducts) => {
   return catalog;
 };
 
+const getBrands = async (req, res = response) => {
+  const catalogPath = join(__dirname, "../brands.json");
+  res.sendFile(catalogPath);
+};
+
+
 module.exports = {
   getCatalog,
   putCatalog,
   updateCatalog,
   getTotalNumberProducts,
   getAndMergeCatalog,
+  getBrands
 };

@@ -80,8 +80,8 @@ const scToken = async (req, res = response) => {
 };
 
 const renewToken = async (req, res = response) => {
-  const { user } = req;
-  const token = await generateJWT(user.id);
+  const { user } = req.body;
+  const token = await generateJWT(user.uid);
   res.json({
     user,
     token,
